@@ -6,6 +6,7 @@ import subprocess
 
 print("1) strong")
 print("2) li")
+print("3) span")
 
 choose = input("Choose: ")
 
@@ -34,6 +35,11 @@ def main():
                 with open(temp_file, 'w') as file:
                     file.write(current_clipboard_content)
                 wrapped_content = wrap_in_list(current_clipboard_content)
+                pyperclip.copy(wrapped_content)
+                last_clipboard_content = wrapped_content
+                subprocess.Popen(['notify-send', last_clipboard_content])
+            elif choose == '3':
+                wrapped_content = f"<span>{current_clipboard_content}</span>"
                 pyperclip.copy(wrapped_content)
                 last_clipboard_content = wrapped_content
                 subprocess.Popen(['notify-send', last_clipboard_content])
