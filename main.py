@@ -7,6 +7,8 @@ import subprocess
 print("1) strong")
 print("2) li")
 print("3) span")
+print("4) h2")
+print("5) h3")
 
 choose = input("Choose: ")
 
@@ -26,10 +28,7 @@ def main():
         if current_clipboard_content != last_clipboard_content:
             subprocess.Popen(['notify-send', current_clipboard_content])
             if choose == '1':
-                wrapped_content = f"<strong>{current_clipboard_content}</strong>"
-                pyperclip.copy(wrapped_content)
-                last_clipboard_content = wrapped_content
-                subprocess.Popen(['notify-send', last_clipboard_content])
+                wrapTag('strong', current_clipboard_content)
             elif choose == '2':
                 temp_file = os.path.join(projects_dir, 'temp.txt')
                 with open(temp_file, 'w') as file:
@@ -39,11 +38,18 @@ def main():
                 last_clipboard_content = wrapped_content
                 subprocess.Popen(['notify-send', last_clipboard_content])
             elif choose == '3':
-                wrapped_content = f"<span>{current_clipboard_content}</span>"
-                pyperclip.copy(wrapped_content)
-                last_clipboard_content = wrapped_content
-                subprocess.Popen(['notify-send', last_clipboard_content])
+                wrapTag('span', current_clipboard_content)
+            elif choose == '4':
+                wrapTag('h2', current_clipboard_content)
+            elif choose == '5':
+                wrapTag('h3', current_clipboard_content)
         time.sleep(0.5)
+
+def wrapTag(tag, content):
+    wrapped_content = f"<{tag}>{content}</{tag}>"
+    pyperclip.copy(wrapped_content)
+    last_clipboard_content = wrapped_content
+    subprocess.Popen(['notify-send', last_clipboard_content])
 
 if __name__ == "__main__":
     main()
