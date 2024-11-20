@@ -9,6 +9,7 @@ print("2) h2")
 print("3) h3")
 print("4) span")
 print("5) li")
+print("6) sup")
 
 choose = input("Choose: ")
 
@@ -54,6 +55,11 @@ def main():
             elif choose == '3':
                 tag = 'h3'
                 wrapped_content = f"<{tag}>{current_clipboard_content}</{tag}>"
+                pyperclip.copy(wrapped_content)
+                last_clipboard_content = wrapped_content
+                subprocess.Popen(['notify-send', last_clipboard_content])
+            elif choose == '6':
+                wrapped_content = f"<sup>{current_clipboard_content}</sup>"
                 pyperclip.copy(wrapped_content)
                 last_clipboard_content = wrapped_content
                 subprocess.Popen(['notify-send', last_clipboard_content])
