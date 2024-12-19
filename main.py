@@ -10,6 +10,7 @@ print("3) h3")
 print("4) span")
 print("5) li")
 print("6) sup")
+print("7) each word capitalize")
 
 choose = input("Choose: ")
 
@@ -60,6 +61,11 @@ def main():
                 subprocess.Popen(['notify-send', last_clipboard_content])
             elif choose == '6':
                 wrapped_content = f"<sup>{current_clipboard_content}</sup>"
+                pyperclip.copy(wrapped_content)
+                last_clipboard_content = wrapped_content
+                subprocess.Popen(['notify-send', last_clipboard_content])
+            elif choose == '7':
+                wrapped_content = current_clipboard_content.title()
                 pyperclip.copy(wrapped_content)
                 last_clipboard_content = wrapped_content
                 subprocess.Popen(['notify-send', last_clipboard_content])
