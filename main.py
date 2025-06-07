@@ -14,11 +14,14 @@ print("7) each word capitalize")
 
 choose = input("Choose: ")
 
+
 def wrap_in_list(clipboard_content):
     """Wrap each line of clipboard content in <li> tags and return wrapped content."""
     lines = clipboard_content.splitlines()  # Split clipboard content into lines
-    wrapped_lines = [f"<li>{line}</li>" for line in lines if line.strip()]  # Wrap each line
+    # Wrap each line
+    wrapped_lines = [f"<li>{line}</li>" for line in lines if line.strip()]
     return f"<ul>\n{'\n'.join(wrapped_lines)}\n</ul>"  # Enclose in <ul> tags
+
 
 def main():
     # Initialize the last clipboard content to an empty string
@@ -70,6 +73,7 @@ def main():
                 last_clipboard_content = wrapped_content
                 subprocess.Popen(['notify-send', last_clipboard_content])
         time.sleep(0.5)
+
 
 if __name__ == "__main__":
     main()
