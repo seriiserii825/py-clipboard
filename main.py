@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 import os
-import pyperclip
-import time
 import subprocess
+import time
+
+import pyperclip
 
 print("1) strong")
 print("2) h2")
