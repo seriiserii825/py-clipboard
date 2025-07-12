@@ -5,6 +5,8 @@ import time
 
 import pyperclip
 
+from modules.cyr_to_lat import cyr_to_lat
+
 print("1) strong")
 print("2) h2")
 print("3) h3")
@@ -12,6 +14,7 @@ print("4) span")
 print("5) li")
 print("6) sup")
 print("7) each word capitalize")
+print("8) Cyr to lat")
 
 choose = input("Choose: ")
 
@@ -70,6 +73,11 @@ def main():
                 subprocess.Popen(["notify-send", last_clipboard_content])
             elif choose == "7":
                 wrapped_content = current_clipboard_content.title()
+                pyperclip.copy(wrapped_content)
+                last_clipboard_content = wrapped_content
+                subprocess.Popen(["notify-send", last_clipboard_content])
+            elif choose == "8":
+                wrapped_content = cyr_to_lat(current_clipboard_content)
                 pyperclip.copy(wrapped_content)
                 last_clipboard_content = wrapped_content
                 subprocess.Popen(["notify-send", last_clipboard_content])
