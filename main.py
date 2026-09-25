@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 import os
-import subprocess
 import time
 
-import pyperclip
+from py_libs.Clipboard import Clipboard
+from py_libs.Notification import Notification
 
 from modules.cyr_to_lat import cyr_to_lat
 
@@ -33,54 +33,46 @@ def main():
     projects_dir = os.path.expanduser("~/Downloads")
 
     while True:
-        current_clipboard_content = pyperclip.paste()
+        current_clipboard_content = Clipboard.read()
         if current_clipboard_content != last_clipboard_content:
-            subprocess.Popen(["notify-send", current_clipboard_content])
+            Notification("Clipboard", current_clipboard_content).notify()
             if choose == "1":
                 wrapped_content = f"<strong>{current_clipboard_content}</strong>"
-                pyperclip.copy(wrapped_content)
+                Clipboard.write(wrapped_content)
                 last_clipboard_content = wrapped_content
-                subprocess.Popen(["notify-send", last_clipboard_content])
             elif choose == "5":
                 temp_file = os.path.join(projects_dir, "temp.txt")
                 with open(temp_file, "w") as file:
                     file.write(current_clipboard_content)
                 wrapped_content = wrap_in_list(current_clipboard_content)
-                pyperclip.copy(wrapped_content)
+                Clipboard.write(wrapped_content)
                 last_clipboard_content = wrapped_content
-                subprocess.Popen(["notify-send", last_clipboard_content])
             elif choose == "4":
                 wrapped_content = f"<span>{current_clipboard_content}</span>"
-                pyperclip.copy(wrapped_content)
+                Clipboard.write(wrapped_content)
                 last_clipboard_content = wrapped_content
-                subprocess.Popen(["notify-send", last_clipboard_content])
             elif choose == "2":
                 tag = "h2"
                 wrapped_content = f"<{tag}>{current_clipboard_content}</{tag}>"
-                pyperclip.copy(wrapped_content)
+                Clipboard.write(wrapped_content)
                 last_clipboard_content = wrapped_content
-                subprocess.Popen(["notify-send", last_clipboard_content])
             elif choose == "3":
                 tag = "h3"
                 wrapped_content = f"<{tag}>{current_clipboard_content}</{tag}>"
-                pyperclip.copy(wrapped_content)
+                Clipboard.write(wrapped_content)
                 last_clipboard_content = wrapped_content
-                subprocess.Popen(["notify-send", last_clipboard_content])
             elif choose == "6":
                 wrapped_content = f"<sup>{current_clipboard_content}</sup>"
-                pyperclip.copy(wrapped_content)
+                Clipboard.write(wrapped_content)
                 last_clipboard_content = wrapped_content
-                subprocess.Popen(["notify-send", last_clipboard_content])
             elif choose == "7":
                 wrapped_content = current_clipboard_content.title()
-                pyperclip.copy(wrapped_content)
+                Clipboard.write(wrapped_content)
                 last_clipboard_content = wrapped_content
-                subprocess.Popen(["notify-send", last_clipboard_content])
             elif choose == "8":
                 wrapped_content = cyr_to_lat(current_clipboard_content)
-                pyperclip.copy(wrapped_content)
+                Clipboard.write(wrapped_content)
                 last_clipboard_content = wrapped_content
-                subprocess.Popen(["notify-send", last_clipboard_content])
         time.sleep(0.5)
 
 
