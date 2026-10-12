@@ -15,16 +15,20 @@ print("5) li")
 print("6) sup")
 print("7) each word capitalize")
 print("8) Cyr to lat")
+print("9) ul")
 
 choose = input("Choose: ")
 
 
-def wrap_in_list(clipboard_content):
-    """Wrap each line of clipboard content in <li> tags and return wrapped content."""
+def wrap_lines_in_li(clipboard_content):
+    """Wrap each non-empty line of clipboard content in <li> tags."""
     lines = clipboard_content.splitlines()  # Split clipboard content into lines
-    # Wrap each line
-    wrapped_lines = [f"<li>{line}</li>" for line in lines if line.strip()]
-    return f"<ul>\n{'\n'.join(wrapped_lines)}\n</ul>"  # Enclose in <ul> tags
+    return "\n".join(f"<li>{line.strip()}</li>" for line in lines if line.strip())
+
+
+def wrap_in_list(clipboard_content):
+    """Wrap each line of clipboard content in <li> tags and enclose in <ul>."""
+    return f"<ul>\n{wrap_lines_in_li(clipboard_content)}\n</ul>"
 
 
 def main():
@@ -44,6 +48,10 @@ def main():
                 temp_file = os.path.join(projects_dir, "temp.txt")
                 with open(temp_file, "w") as file:
                     file.write(current_clipboard_content)
+                wrapped_content = wrap_lines_in_li(current_clipboard_content)
+                Clipboard.write(wrapped_content)
+                last_clipboard_content = wrapped_content
+            elif choose == "9":
                 wrapped_content = wrap_in_list(current_clipboard_content)
                 Clipboard.write(wrapped_content)
                 last_clipboard_content = wrapped_content
